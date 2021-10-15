@@ -1,0 +1,104 @@
+
+\documentclass[12pt]{article}
+\usepackage[latin1]{inputenc}
+%\usepackage[utf8]{inputenc}
+\usepackage{a4} %durch a4paper ersetzt notafall noch mal prüfen
+
+%\usepackage{ngerman}
+\usepackage{listings}
+
+%\usepackage{times}
+\usepackage[T1]{fontenc}
+
+%\usepackage{pstricks,pst-node,pst-tree}
+\usepackage{pst-all}
+\usepackage{pstricks-add}
+
+%\usepackage{pstricks}
+%\usepackage{multido}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{rotating}
+\usepackage{graphicx}
+\usepackage{ulem}
+\usepackage{setspace}
+\usepackage{ifthen}
+\usepackage{bbm}
+%\usepackage{calc}
+%\usepackage{dblfloatfix} %figures at the bottom of a page
+
+\usepackage{natbib}
+\usepackage{multirow}
+
+% Captions einstellen
+%\usepackage[font=small,format=plain,labelfont=bf,up,textfont=it,up]{caption}
+\usepackage{url}
+
+%\usepackage{plaindin}
+%\usepackage{natbib}
+%\citestyle{dinat}
+
+
+%\lstloadlanguages{C++}
+\lstset{numbers=left, numberstyle=\tiny,
+stepnumber=1, numbersep=5pt,captionpos=b}
+% \include{GAST_LANGUAGE}
+
+
+%******************************************************************************
+%				Dokument
+%******************************************************************************
+\begin{document}
+%\onehalfspacing
+
+
+\bibliographystyle{apalike}
+%\bibliographystyle{dinat}
+\thispagestyle{empty}
+
+
+
+%------------------------------------------------------------------------------
+% Frontmatter
+%------------------------------------------------------------------------------
+
+% Titlepage
+\include{titlepage}
+
+% Kopfzeile anzeigen
+\pagestyle{headings}
+
+% Inhaltsverzeichnis
+\tableofcontents
+
+
+%	Vorwort
+%\include{vorwort}
+
+
+%------------------------------------------------------------------------------
+% Mainmatter
+%------------------------------------------------------------------------------
+
+\include{motivation}
+
+% Listings
+%\lstlistoflistings
+
+% Tabellen
+\listoftables
+
+% Abbildungen
+\listoffigures
+
+\newpage
+
+%\appendixname{Literaturverzeichnis}
+
+% Literaturverzeichnis
+\bibliography{literature}
+
+% Danksagung ubd Erklaerung
+%\include{danksagungErklaerung}
+
+\end{document}

@@ -1,0 +1,98 @@
+Cluster commands
+
+copy data from local to remote: 
+- sftp studhaefner@vingilot
+- put -r folder_in_local folder_in_remote (create folder before copying)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+copy data from remote to local: 
+- sftp studhaefner@vingilot
+- get -r folder_in_remote folder_in_local
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+create a Docker image file (Dockerfile), e.g.
+FROM pytorch/pytorch:1.3-cuda10.1-cudnn7-runtime
+
+COPY ./requirements.txt /workspace/
+RUN conda install --y pip
+RUN pip install -r /workspace/requirements.txt
+
+RUN pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cu111/torch_nightly.html -U
+
+# Run a test if the container has all dependencies
+RUN python -c "import torch"
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+create a yaml configuration file, e.g.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: train-model-no-attention-semeval2010
+spec:
+  template:
+    spec:
+      priorityClassName: research-med
+      containers:
+        - name: train-model-no-attention-semeval2010
+          image: ls6-stud-registry.informatik.uni-wuerzburg.de/studhaefner/train-model:0.0.1
+          imagePullPolicy: "Always"
+          env:
+            - name: TEST
+              value: "hello"
+          resources:
+            limits:
+              nvidia.com/gpu: "1"
+              cpu: "4"
+              memory: "4Gi"
+            requests:
+              nvidia.com/gpu: "1"
+              cpu: "4"
+              memory: "4Gi"
+          command: ["python3", "/home/stud/haefner/xtailab2/training.py", "--data_type", "semeval2010"]
+          volumeMounts:
+            - mountPath: /home/stud/haefner/xtailab2 # directory IN the container
+              name: xtailab2 # matches volume-name from below
+      imagePullSecrets:
+        - name: lsx-registry
+      restartPolicy: "Never"
+      volumes:
+        - name: xtailab2
+          cephfs:
+            monitors:
+              - 132.187.14.16,132.187.14.17,132.187.14.19,132.187.14.20  # Not important for you, just copy along
+            user: studhaefner  # <namespace>
+            path: "/home/stud/haefner/xtailab2" # The path you want to mount
+            secretRef: # The name of the secret for auth. Is always "ceph-secret"
+              name: ceph-secret
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+use 'byobu' to keep the session when internet connection is lost
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+build the Docker container:
+- export NAME=ls6-stud-registry.informatik.uni-wuerzburg.de/studhaefner/train-model:0.0.1
+- buildah bud -t $NAME .
+- buildah login ls6-stud-registry.informatik.uni-wuerzburg.de
+- buildah push $NAME
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+run the job:
+- kubectl -n studhaefner create -f train_model.yaml
+
+delete the job:
+- kubectl -n studhaefner delete -f train_model.yaml
+
+see all jobs/pods:
+- kubectl -n studhaefner get pods/jobs
+
+get the logs: 
+- kubectl -n studhaefner logs -f <pod_name>
+
+get further information:
+- kubectl -n studhaefner describe pod/job <name>

@@ -1,0 +1,10 @@
+cluster.professor-x.de
+
+User:clusterdoc
+PWD:sH6A0DoEvrvJjnChG20KxHsH
+
+
+Cluster with GPUs:
+
+User: studdumitrascu
+H5fOFy5ZSrn2NA==

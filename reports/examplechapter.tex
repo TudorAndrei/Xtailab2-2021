@@ -1,0 +1,35 @@
+\section{Introduction}
+
+\subsection{Topic A with equation}
+
+Example text, with an example citation \cite{paper_from_literature} and an example equation.
+%
+\begin{align}
+h_{\langle t\rangle} = f (\textbf{h}_{\langle t-1\rangle}, x_{t}) \label{eq:example_equation}
+\end{align}
+%
+Another example text. See Equation \eqref{eq:example_equation}.
+
+\subsection{Topic B with figure}
+
+The structure blabla can be seen in Figure \ref{fig:example_figure1}.
+Here are two figures in one minipage.
+%
+\begin{figure}[!tbp]
+\centering
+  \begin{minipage}[b]{.45\textwidth}
+  \centering
+    \includegraphics[width=0.8\textwidth]{pics/figure1.png}
+    \caption{Caption 1.}
+    \label{fig:example_figure1}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{.45\textwidth}
+  \centering
+    \includegraphics[width=0.8\textwidth]{pics/figure2.png}
+    \caption{Caption 2.}
+    \label{fig:example_figure2}
+	\end{minipage}
+\end{figure}
+%
+Another sample text.

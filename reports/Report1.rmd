@@ -1,0 +1,18 @@
+---
+title: "Seq2Seq and Attention"
+subtitle: ""
+author: "Tudor Andrei Dumitrascu"
+geometry: margin=2cm
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+fontsize: 12pt
+bibliography:
+ - /home/tudor/Documents/notes/references/refs.bib
+ - ./literature.bib
+
+output:
+ pdf_document:
+  latex_engine: xelatex
+  toc: true
+  toc_depth: 2
+  number_sections: true
+---
